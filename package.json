@@ -8,7 +8,9 @@
         "node": "0.4.x"
     },
     "dependencies": {
-        "express": "2.3.x"
+        "express": "2.3.x",
+        "ejs":"x.x.x",
+        "imagemagick":"x.x.x"
     }
 }
 
