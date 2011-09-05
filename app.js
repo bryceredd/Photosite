@@ -6,7 +6,7 @@ var imagemagick = require('imagemagick')
 
 var thumbnails = require('./util/thumbnail')
 
-var photoPath = path.join('/home/bryce/Desktop/organized')
+var photoPath = path.join(__dirname,'/public/organized')
 
 var app = express.createServer()
 //app.set('views', path.join(__dirname, 'views'))
