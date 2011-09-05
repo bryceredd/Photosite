@@ -1,0 +1,12 @@
+<html>
+<% for(var name in locals.albums) {
+	var pictures = albums[name] %>
+
+	<% for(var index in pictures) {
+		var picture = pictures[index] %>
+
+		<img src="/organized/<%- name %>/<%- picture %>" style="width:70px"; float:left">
+		
+	<% break } %>
+<% } %>
+</html>
