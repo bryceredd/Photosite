@@ -1,8 +1,9 @@
 var fs = require('fs')
 var path = require('path')
 var thumbnails = require('../util/thumbnail')
+var config = require('../config')
 
-var photoPath = path.join(__dirname,'../public/organized')
+var photoPath = config.photoPath
 
 exports.getAlbums = function(cb) {
 	fs.readdir(photoPath, function(err, dirs) {
@@ -33,20 +34,15 @@ exports.getAlbum = function(name, cb) {
         if(!files) return cb()
 
         var pictures = []
-        var count = files.length
         files.forEach(function(file) {
             var imagePath = path.join(albumPath, file)
+            var thumbPath = thumbnails.thumbUrlForImage(imagePath)
+            var largePath = thumbnails.largeUrlForImage(imagePath)
+            pictures.push({file:file, thumb:thumbPath, large:largePath})
 
-            thumbnails.thumbnailForImage(imagePath, function(err, thumbPath) {
-                if(err) return cb(err)
-
-                pictures.push({file:file, thumb:thumbPath})
-
-                if(--count === 0) {
-                    return cb(null, pictures)
-                }
-            })
         })
+
+        return cb(null, pictures)
     })
 
 }

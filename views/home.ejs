@@ -4,7 +4,9 @@
 	<% for(var index in pictures) {
 		var picture = pictures[index] %>
 
-		<img src="/organized/<%- name %>/<%- picture %>" style="width:70px"; float:left">
+                <a href="/album/<%- name %>">
+                    <div class="pictureBox" style=" background-image: url('<%- picture.thumb %>');"> </div>
+                </a>
 		
 	<% break } %>
 <% } %>

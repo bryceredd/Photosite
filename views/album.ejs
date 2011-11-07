@@ -1,0 +1,6 @@
+<% for(var key in locals.album) { 
+    var picture = locals.album[key] %>
+    <a href="<%- picture.large %>" rel="lightbox[album]">
+        <div class="pictureBox" style="background-image: url('<%- picture.thumb %>') "> </div>
+    </a>
+<% } %>
