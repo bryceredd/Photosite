@@ -31,10 +31,14 @@ app.get('/test', function(req, res) {
 })
 
 app.get('/convert', function(req, res) {
+
     console.log(path.join(__dirname,"img.jpg"))
-    imagemagick.readMetadata(path.join(__dirname,"img.jpg"), function(err, features) {
-        console.log(err, features)
-        res.render("test", features)
+
+    var img = path.join(__dirname, "img.jpg")
+
+    imagemagick.convert(['img.jpg', '-resize', '100x100', 'img-small.jpg'], function(err, metadata) {
+        console.log(err, metadata)
+        res.render("test", metadata)
     })
 })
 
