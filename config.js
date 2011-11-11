@@ -7,5 +7,6 @@ exports.largeSize = "1200x900"
 
 exports.thumbPath = path.join(exports.root, '/public/'+exports.thumbSize)
 exports.largePath = path.join(exports.root, '/public/'+exports.largeSize)
-exports.photoPath = path.join(exports.root,'/public/organized')
+exports.photoPath = path.join(exports.root, '/public/organized')
+exports.photoUrl = '/organized'
 

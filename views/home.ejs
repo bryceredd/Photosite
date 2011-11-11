@@ -5,8 +5,15 @@
 		var picture = pictures[index] %>
 
                 <a href="/album/<%- name %>">
-                    <div class="pictureBox" style=" background-image: url('<%- picture.thumb %>');"> </div>
+                    <div class="pictureItem">
+                        <div class="pictureBox" style=" background-image: url('<%- picture.thumb %>');"> </div>
+                        <div class="pictureCaption">
+                            <div class="title"><%- picture.title %></div>
+                            <div class="subtitle"><%- picture.subtitle %></div>
+                        </div>
+                    </div>
                 </a>
 		
 	<% break } %>
 <% } %>
+

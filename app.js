@@ -42,4 +42,4 @@ app.configure(function() {
     app.set('views', path.join(config.root, '/views'));
 })
 
-app.listen(3000);
+app.listen(80);

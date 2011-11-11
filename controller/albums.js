@@ -28,7 +28,11 @@ exports.getAlbums = function(cb) {
 }
 
 exports.getAlbum = function(name, cb) {
+    var titlePattern = /[a-z\s]+$/gi
+    
     var albumPath = path.join(photoPath, name)
+    var albumTitle = titlePattern.exec(name)
+    var albumDate = parseAlbumDate(name)
     
     fs.readdir(albumPath, function(err, files) {
         if(!files) return cb()
@@ -38,11 +42,26 @@ exports.getAlbum = function(name, cb) {
             var imagePath = path.join(albumPath, file)
             var thumbPath = thumbnails.thumbUrlForImage(imagePath)
             var largePath = thumbnails.largeUrlForImage(imagePath)
-            pictures.push({file:file, thumb:thumbPath, large:largePath})
+            var fullPath = path.join(path.join(config.photoUrl, name), file)
+
+            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDate})
 
         })
 
         return cb(null, pictures)
     })
 
+}
+
+function parseAlbumDate(name) {
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    var yearPattern = /([0-9]+)/gi
+    var monthPattern = /[0-9]+-([0-9]+)/gi
+
+    var year = yearPattern.exec(name)[1]
+    var month = monthPattern.exec(name)[1]
+
+    if(!month) return year? year : ""
+
+    return months[month] + " " + year
 }
