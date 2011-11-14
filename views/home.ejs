@@ -1,19 +1,25 @@
-<% for(var name in locals.albums) {
-	var pictures = albums[name] %>
+<script> 
+    var pictures = []
 
-	<% for(var index in pictures) {
-		var picture = pictures[index] %>
-
-                <a href="/album/<%- name %>">
-                    <div class="pictureItem">
-                        <div class="pictureBox" style=" background-image: url('<%- picture.thumb %>');"> </div>
-                        <div class="pictureCaption">
-                            <div class="title"><%- picture.title %></div>
-                            <div class="subtitle"><%- picture.subtitle %></div>
-                        </div>
-                    </div>
-                </a>
+    <% for(var name in locals.albums) {
+            var pictures = albums[name] %>
+            pictures.push(<%-JSON.stringify(pictures)%>)
+    <% } %>
+</script>
+    
+<div class="tiles template">
+    <a href="#" class="albumTile template">
+        <div class="pictureItem">
+            <div class="pictureBox"></div>
+            <div class="pictureCaption">
+                <div class="title"></div>
+                <div class="subtitle"></div>
+            </div>
+        </div>
+    </a>
+</div>
 		
-	<% break } %>
-<% } %>
+
+<script type="text/javascript" src="/js/album-tile.js"></script>
+<script> loadAlbums(pictures) </script>
 

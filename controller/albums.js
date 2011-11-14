@@ -33,6 +33,9 @@ exports.getAlbum = function(name, cb) {
     var albumPath = path.join(photoPath, name)
     var albumTitle = titlePattern.exec(name)
     var albumDate = parseAlbumDate(name)
+
+    if(albumTitle != null && albumTitle != undefined)
+        albumTitle = albumTitle[0]
     
     fs.readdir(albumPath, function(err, files) {
         if(!files) return cb()
@@ -61,7 +64,7 @@ function parseAlbumDate(name) {
     var year = yearPattern.exec(name)[1]
     var month = monthPattern.exec(name)[1]
 
-    if(!month) return year? year : ""
+    if(month == null || month == undefined) return year? year : ""
 
-    return months[month] + " " + year
+    return months[month-1] + " " + year
 }
