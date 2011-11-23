@@ -13,13 +13,25 @@ app.set('view engine', 'ejs')
 
 app.get('/', function(req, res) {
     albums.getAlbums(function(err, albums) {
-        res.render("home", {'albums':albums})
+        res.render("layout")
+    })
+})
+
+app.get('/photos', function(req, res) {
+    albums.getAlbums(function(err, albums) {
+        res.send(albums)
     })
 })
 
 app.get('/album/:albumid', function(req, res) {
     albums.getAlbum(req.params.albumid, function(err, album) {
-        res.render("album", {'album':album})
+        res.render("layout")
+    })
+})
+
+app.get('/photos/:albumid', function(req, res) {
+    albums.getAlbum(req.params.albumid, function(err, album) {
+        res.send(album)
     })
 })
 

@@ -32,6 +32,28 @@ a {
     background-repeat: no-repeat;
     height:232px; 
     width:350px; 
+
+    -webkit-transition: background-image .25s ease-in-out;
+}
+
+.titleBox {
+    background: #121212;
+    float:left; 
+    height:232px; 
+    margin:2px;
+    width:700px; 
+}
+
+.titleBox .title {
+    color:#facc2e;
+    font-size: 36pt;
+    padding-left:20px;
+}
+
+.titleBox .subtitle {
+    color: #ababab;
+    font-size:22pt;
+    padding-left:20px;
 }
 
 .pictureItem:hover .download {

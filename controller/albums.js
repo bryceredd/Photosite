@@ -9,15 +9,15 @@ exports.getAlbums = function(cb) {
 	fs.readdir(photoPath, function(err, dirs) {
                 if(err) return cb(err)
                 if(!dirs) dirs = {}
-
-                var albums = {}
+ 
+                var albums = []
 
                 var count = dirs.length
                 dirs.forEach(function(dir) {
                     exports.getAlbum(dir, function(err, album) {
                         if(err) return cb(err)
 
-                         albums[dir] = album
+                         albums.push(album)
 
                          if(--count === 0) {
                              return cb(null, albums)
@@ -47,7 +47,7 @@ exports.getAlbum = function(name, cb) {
             var largePath = thumbnails.largeUrlForImage(imagePath)
             var fullPath = path.join(path.join(config.photoUrl, name), file)
 
-            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDate})
+            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDate, name:name})
 
         })
 
