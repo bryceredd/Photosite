@@ -10,3 +10,5 @@ exports.largePath = path.join(exports.root, '/public/'+exports.largeSize)
 exports.photoPath = path.join(exports.root, '/public/organized')
 exports.photoUrl = '/organized'
 
+
+
