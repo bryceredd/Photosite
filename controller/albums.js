@@ -20,7 +20,10 @@ exports.getAlbums = function(cb) {
                          albums.push(album)
 
                          if(--count === 0) {
-                             return cb(null, albums)
+			
+  			    var dateSort = function(a,b) { return a[0].date > b[0].date? -1 : 1 }
+
+                             return cb(null, albums.sort(dateSort))
                          }
                     })
                 })
@@ -32,7 +35,8 @@ exports.getAlbum = function(name, cb) {
     
     var albumPath = path.join(photoPath, name)
     var albumTitle = titlePattern.exec(name)
-    var albumDate = parseAlbumDate(name)
+    var albumDateString = parseAlbumDate(name)
+    var albumDate = dateForAlbum(name)
 
     if(albumTitle != null && albumTitle != undefined)
         albumTitle = albumTitle[0]
@@ -47,13 +51,27 @@ exports.getAlbum = function(name, cb) {
             var largePath = thumbnails.largeUrlForImage(imagePath)
             var fullPath = path.join(path.join(config.photoUrl, name), file)
 
-            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDate, name:name})
+            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDateString, date:albumDate, name:name})
 
         })
 
         return cb(null, pictures)
     })
 
+}
+
+function dateForAlbum(name) {
+    var yearPattern = /([0-9]+)/gi
+    var monthPattern = /[0-9]+-([0-9]+)/gi
+
+    var year = yearPattern.exec(name)[1]
+    var month = monthPattern.exec(name)[1]
+
+	var date = new Date()
+	date.setFullYear(year)
+	date.setMonth(month)
+
+	return date
 }
 
 function parseAlbumDate(name) {
