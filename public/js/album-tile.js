@@ -1,3 +1,6 @@
+var RANDOM_DELAY_MAX = 70 // in seconds
+
+
 var AlbumTile = (function() {
     var $template = $(".template.pictureItem").removeClass("template").remove()
 
@@ -15,7 +18,7 @@ var AlbumTile = (function() {
 
     AlbumTile.prototype.loadData = function(jsonData) {
         clearTimeout(this.randomTimer)
-        this.isAlbum = Array.isArray(jsonData)
+        this.isAlbum = $.isArray(jsonData)
 
         if(this.isAlbum) {
             this.allData = jsonData 
@@ -43,7 +46,7 @@ var AlbumTile = (function() {
 			self.randomChange()
 		})
             })
-        }, Math.random()*30*1000)
+        }, Math.random()*RANDOM_DELAY_MAX*1000)
     }
 
     AlbumTile.prototype.write = function() {
