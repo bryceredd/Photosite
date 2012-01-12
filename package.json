@@ -10,7 +10,8 @@
     "dependencies": {
         "express": "2.3.x",
         "ejs":"x.x.x",
-        "imagemagick":"x.x.x"
+        "imagemagick":"x.x.x", 
+	"cluster":"x.x.x"
     }
 }
 

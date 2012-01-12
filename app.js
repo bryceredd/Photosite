@@ -2,6 +2,7 @@ var express = require('express')
 var fs = require('fs')
 var ejs = require('ejs')
 var path = require('path')
+var cluster = require('cluster')
 var thumbnails = require('./util/thumbnail')
 var albums = require('./controller/albums')
 
@@ -54,4 +55,4 @@ app.configure(function() {
     app.set('views', path.join(config.root, '/views'));
 })
 
-app.listen(80);
+cluster(app).listen(80);
