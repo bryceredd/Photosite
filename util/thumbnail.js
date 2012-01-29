@@ -49,14 +49,21 @@ exports.thumbnailWithName = function(thumbName, cb) {
 }
 
 function generateThumbnailForImage(srcPath, destPath, size, cb) {
+    var imgData = fs.readFileSync(srcPath, 'binary')
 
     console.log('shrinking ', srcPath)
-    imagemagick.convert([srcPath, '-resize', size, destPath], function(err, metadata) {
-        console.log('shrunk to ', destPath)
-
-        cb(err, destPath)
-    })
-}
+    imagemagick.resize({
+            srcData: imgData, 
+            strip: false, 
+            width:config.thumbWidth, 
+            height:"^"+config.thumbHeight,
+            customArgs: ["-gravity", "north", "-extent", config.thumbSize]
+        }, function(err, stdout, stderr) {
+            console.log('shrunk to ', destPath)
+            fs.writeFileSync(destPath, stdout, 'binary');
+            cb(err, destPath)
+        })
+    }
 
 function largeExistsForImage(path, cb) {
     var path = exports.largePathForImage(path)
