@@ -15,7 +15,7 @@ exports.largeWithName = function(path, cb) {
             if(exists)
                 cb(null, largePath) 
             else 
-                generateThumbnailForImage(path, largePath, config.largeSize, cb)
+                resizeImage(path, largePath, config.largeSize, cb)
         })
     })
 }
@@ -45,6 +45,15 @@ exports.thumbnailWithName = function(thumbName, cb) {
             cb(null, thumbPath) 
         else 
             generateThumbnailForImage(fullPath, thumbPath, config.thumbSize, cb)
+    })
+}
+
+function resizeImage(srcPath, destPath, size, cb) {
+    console.log('shrinking ', srcPath)
+    imagemagick.convert([srcPath, '-resize', size, destPath], function(err, metadata) {
+        console.log('shrunk to ', destPath)
+
+        cb(err, destPath)
     })
 }
 
