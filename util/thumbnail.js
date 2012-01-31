@@ -31,7 +31,7 @@ exports.thumbnailForImage = function(path, cb) {
             if(exists)
                 cb(null, thumbPath) 
             else 
-                generateThumbnailForImage(path, thumbPath, config.thumbSize, cb)
+                generateThumbnailForImage(path, thumbPath, cb)
         })
     })
 }
@@ -41,10 +41,11 @@ exports.thumbnailWithName = function(thumbName, cb) {
     var fullPath = decodeURIComponent(thumbName)
 
     fileExists(thumbPath, function(exists) {
-        if(exists)
+        if(exists) {
+            colorSchemeForImage(thumbPath, function() {})
             cb(null, thumbPath) 
-        else 
-            generateThumbnailForImage(fullPath, thumbPath, config.thumbSize, cb)
+        } else 
+            generateThumbnailForImage(fullPath, thumbPath, cb)
     })
 }
 
@@ -57,7 +58,7 @@ function resizeImage(srcPath, destPath, size, cb) {
     })
 }
 
-function generateThumbnailForImage(srcPath, destPath, size, cb) {
+function generateThumbnailForImage(srcPath, destPath, cb) {
     var imgData = fs.readFileSync(srcPath, 'binary')
 
     console.log('shrinking ', srcPath)
@@ -84,6 +85,38 @@ function thumbnailExistsForImage(path, cb) {
     var path = exports.thumbPathForImage(path)
 
     fileExists(path, cb)
+}
+
+exports.colorsForUrl = function(url, cb) {
+    imagemagick.convert([url, '-colors', 12, '-format', '%c', '-depth', 8, 'histogram:info:-'], function(err, output) {
+
+        output = output.trim()
+        output = output.replace(/:.*#/g, ", \"color\": \"#")
+        output = output.replace(/^\s*/gm, "{\"amount\": ")
+        output = output.replace(/ rgb.*/g, "\"},")
+        output = output.substring(0, output.length-1)
+        output = "[" + output + "]"
+
+        var results = JSON.parse(output)
+
+        results = results.sort(function(a, b) {
+            return b.amount - a.amount
+        })
+
+        var colors = []
+        for(var i=0; i<results.length; i++) {
+            colors.push(results[i].color)
+        }
+
+        cb(null, colors)
+    })
+}
+
+function colorSchemeForImage(path, cb) {
+    imagemagick.convert([path, '-colors', 4, '-format', '%c', '-depth', 8, 'histogram:info:-'], function(err, output) {
+        console.log(output)
+        cb(output)
+    })
 }
 
 function fileExists(p, cb) {

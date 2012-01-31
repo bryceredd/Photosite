@@ -51,6 +51,15 @@ exports.createServer = function() {
         })
     })
 
+    app.get(/\/colors\/(.+)/, function(req, res) {
+        var url = req.url.replace("/colors/", "")
+
+        console.log(url)
+        thumbnails.colorsForUrl(url, function(err, colors) {
+            res.send(colors)
+        })
+    })
+
     app.configure(function() {
         app.use(express.static(path.join(config.root,'/public')))
         app.set('views', path.join(config.root, '/views'));
@@ -60,7 +69,6 @@ exports.createServer = function() {
 }
 
 if(module == require.main) {
-    var server = cluster(exports.createServer()).listen(80)
-
+//    cluster(exports.createServer()).listen(80)
 }
-//app.listen(80);
+exports.createServer().listen(80);
