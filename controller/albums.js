@@ -1,25 +1,29 @@
 var fs = require('fs')
 var path = require('path')
 var thumbnails = require('../util/thumbnail')
+var config = require('../config')
 
-var photoPath = path.join(__dirname,'../public/organized')
+var photoPath = config.photoPath
 
 exports.getAlbums = function(cb) {
 	fs.readdir(photoPath, function(err, dirs) {
                 if(err) return cb(err)
                 if(!dirs) dirs = {}
-
-                var albums = {}
+ 
+                var albums = []
 
                 var count = dirs.length
                 dirs.forEach(function(dir) {
                     exports.getAlbum(dir, function(err, album) {
                         if(err) return cb(err)
 
-                         albums[dir] = album
+                         albums.push(album)
 
                          if(--count === 0) {
-                             return cb(null, albums)
+			
+  			    var dateSort = function(a,b) { return a[0].date > b[0].date? -1 : 1 }
+
+                             return cb(null, albums.sort(dateSort))
                          }
                     })
                 })
@@ -27,26 +31,58 @@ exports.getAlbums = function(cb) {
 }
 
 exports.getAlbum = function(name, cb) {
+    var titlePattern = /[a-z\s]+$/gi
+    
     var albumPath = path.join(photoPath, name)
+    var albumTitle = titlePattern.exec(name)
+    var albumDateString = parseAlbumDate(name)
+    var albumDate = dateForAlbum(name)
+
+    if(albumTitle != null && albumTitle != undefined)
+        albumTitle = albumTitle[0]
     
     fs.readdir(albumPath, function(err, files) {
         if(!files) return cb()
 
         var pictures = []
-        var count = files.length
         files.forEach(function(file) {
             var imagePath = path.join(albumPath, file)
+            var thumbPath = thumbnails.thumbUrlForImage(imagePath)
+            var largePath = thumbnails.largeUrlForImage(imagePath)
+            var fullPath = path.join(path.join(config.photoUrl, name), file)
 
-            thumbnails.thumbnailForImage(imagePath, function(err, thumbPath) {
-                if(err) return cb(err)
+            pictures.push({file:file, thumb:thumbPath, large:largePath, full:fullPath, subtitle:albumTitle, title:albumDateString, date:albumDate, name:name})
 
-                pictures.push({file:file, thumb:thumbPath})
-
-                if(--count === 0) {
-                    return cb(null, pictures)
-                }
-            })
         })
+
+        return cb(null, pictures)
     })
 
+}
+
+function dateForAlbum(name) {
+    var yearPattern = /([0-9]+)/gi
+    var monthPattern = /[0-9]+-([0-9]+)/gi
+
+    var year = yearPattern.exec(name)[1]
+    var month = monthPattern.exec(name)[1]
+
+	var date = new Date()
+	date.setFullYear(year)
+	date.setMonth(month)
+
+	return date
+}
+
+function parseAlbumDate(name) {
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    var yearPattern = /([0-9]+)/gi
+    var monthPattern = /[0-9]+-([0-9]+)/gi
+
+    var year = yearPattern.exec(name)[1]
+    var month = monthPattern.exec(name)[1]
+
+    if(month == null || month == undefined) return year? year : ""
+
+    return months[month-1] + " " + year
 }

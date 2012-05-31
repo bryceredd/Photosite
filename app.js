@@ -2,44 +2,73 @@ var express = require('express')
 var fs = require('fs')
 var ejs = require('ejs')
 var path = require('path')
-var imagemagick = require('imagemagick')
+var cluster = require('cluster')
 var thumbnails = require('./util/thumbnail')
+var albums = require('./controller/albums')
 
-// setup vars
-var photoPath = path.join(__dirname,'/public/organized')
+var config = require('./config.js')
 
 
-var app = express.createServer()
-//app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+exports.createServer = function() {
+    app = express.createServer()
+    app.set('view engine', 'ejs')
 
-app.get('/', function(req, res) {
-	fs.readdir(photoPath, function(err, files) {
-
-		var pictures = {}
-
-		files.forEach(function(file) {
-			pictures[file] = (fs.readdirSync(path.join(photoPath,file)))
-		})
-
-		res.render("home", {albums:pictures})
-	})
-})
-
-app.get('/test', function(req, res) {
-	res.render("home.ejs")
-})
-
-app.get('/convert', function(req, res) {
-    console.log(path.join(__dirname,"img.jpg"))
-    imagemagick.readMetadata(path.join(__dirname,"img.jpg"), function(err, features) {
-        console.log(err, features)
-        res.render("test", features)
+    app.get('/', function(req, res) {
+        albums.getAlbums(function(err, albums) {
+            res.render("layout")
+        })
     })
-})
 
-app.configure(function() {
-	app.use(express.static(path.join(__dirname,'/public')))
-})
+    app.get('/photos', function(req, res) {
+        albums.getAlbums(function(err, albums) {
+            res.send(albums)
+        })
+    })
 
-app.listen(3000);
+    app.get('/album/:albumid', function(req, res) {
+        albums.getAlbum(req.params.albumid, function(err, album) {
+            res.render("layout")
+        })
+    })
+
+    app.get('/photos/:albumid', function(req, res) {
+        albums.getAlbum(req.params.albumid, function(err, album) {
+            res.send(album)
+        })
+    })
+
+    app.get('/large/:thumbName', function(req, res) {
+        thumbnails.largeWithName(req.params.thumbName, function(err, thumbPath) {
+            res.contentType(thumbPath)
+            res.sendfile(thumbPath)
+        })
+    })
+
+    app.get('/thumb/:thumbName', function(req, res) {
+        thumbnails.thumbnailWithName(req.params.thumbName, function(err, thumbPath) {
+            res.contentType(thumbPath)
+            res.sendfile(thumbPath)
+        })
+    })
+
+    app.get(/\/colors\/(.+)/, function(req, res) {
+        var url = req.url.replace("/colors/", "")
+
+        console.log(url)
+        thumbnails.colorsForUrl(url, function(err, colors) {
+            res.send(colors)
+        })
+    })
+
+    app.configure(function() {
+        app.use(express.static(path.join(config.root,'/public')))
+        app.set('views', path.join(config.root, '/views'));
+    })
+
+    return app
+}
+
+if(module == require.main) {
+//    cluster(exports.createServer()).listen(80)
+}
+exports.createServer().listen(80);

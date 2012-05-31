@@ -1,6 +1,53 @@
 <html>
-<body>
-<%- body %>
-</body>
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/jquery.lightbox-0.5.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+
+    <!-- google analytics -->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28430223-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.lightbox-0.5.js"></script>
+
+<body>
+    <div class="template titleBox">
+        <div class="title">a title</div>
+        <div class="subtitle">a subtitle</div>
+    </div>
+    <div class="tiles template">
+        <div class="pictureItem template">
+            <a class="download" href="#">Download</a>
+            <a href="#" class="expand">
+                <div class="pictureBox"></div>
+                <div class="pictureCaption">
+                    <div class="title"></div>
+                    <div class="subtitle"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <b>omg</b>
+</body>
+
+
+
+<script type="text/javascript" src="/js/album-tile.js"></script>
+<script type="text/javascript" src="/js/album-page.js"></script>
+<script> var page = new AlbumPage() </script>
+
 </html>
