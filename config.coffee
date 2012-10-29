@@ -5,8 +5,10 @@ deps = container()
 
 # CONFIG / VARIABLES
 deps.register "PHOTOSITE_PORT", process.env.PHOTOSITE_PORT || 8081
-deps.register "IMAGE_RESIZER", process.env.IMAGE_RESIZER || "resiser.i.tv"
+deps.register "IMAGE_RESIZER", process.env.IMAGE_RESIZER || 'resizer.i.tv'
 deps.register "PHOTO_PATH", process.env.PHOTO_PATH || 'organized'
+
+console.log process.env
 
 exports.mongoHQusername = 'mongo_user_0249'
 exports.mongoHQpassword = 'mongo_pass_6338'
