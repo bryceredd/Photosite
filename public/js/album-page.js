@@ -25,16 +25,15 @@ var AlbumPage = (function() {
     AlbumPage.prototype.loadAlbums = function() {
         var self = this
 
-        $.get("/photos", function(response) {
+        $.get("/albums", function(response) {
             self.albumdata = response;
-
             self.write()
         })
     }
 
     AlbumPage.prototype.loadAlbum = function(album) {
         var self = this
-        $.get("/photos/"+album, function(response) {
+        $.get("/albums/"+album, function(response) {
             self.albumdata = response
             self.write()
         })
@@ -43,22 +42,38 @@ var AlbumPage = (function() {
     AlbumPage.prototype.write = function() {
         this.$page.empty()
 
-        for(var i=0; i<this.albumdata.length; i++) {
+        if(!this.albumdata.subtitle)
+            this.$titleBoxSubtitle.hide()
 
-            if(i == 1 && this.isAlbum) {
-                this.$page.append(this.$titleBox)
-                this.$titleBoxTitle.text(this.albumdata[0].title)
-                this.$titleBoxSubtitle.text(this.albumdata[0].subtitle)
+        if(this.isAlbum) {
 
-                if(!this.albumdata[0].subtitle)
-                    this.$titleBoxSubtitle.hide()
+            for (var i = 0; i < this.albumdata.pictures.length; i++) {
+                picture = this.albumdata.pictures[i]
+
+                if(i == 1 && this.isAlbum) {
+                    this.$page.append(this.$titleBox)
+                    this.$titleBoxTitle.text(this.albumdata.title)
+                    this.$titleBoxSubtitle.text(this.albumdata.subtitle)
+                }
+
+                var tile = new AlbumTile(this)
+                this.tiles.push(tile)
+                tile.loadPicture(this.albumdata, picture)
+                this.$page.append(tile.element())
             }
 
-            var tile = new AlbumTile(this)
-            this.tiles.push(tile)
-            tile.loadData(this.albumdata[i])
-            this.$page.append(tile.element())
 
+        } else {
+
+            for(var i=0; i<this.albumdata.length; i++) {
+                album = this.albumdata[i]
+
+                var tile = new AlbumTile(this)
+                this.tiles.push(tile)
+                tile.loadAlbum(album)
+                this.$page.append(tile.element())
+
+            }
         }
 
         if(this.isAlbum)
