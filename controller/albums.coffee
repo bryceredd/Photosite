@@ -5,7 +5,6 @@ async = require 'async'
 
 module.exports = (PHOTO_PATH) ->
 
-
     getPhoto = (req, res) ->
         album = req.params.album
         photo = req.params.photo
