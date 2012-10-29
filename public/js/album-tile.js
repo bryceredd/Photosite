@@ -55,6 +55,7 @@ var AlbumTile = (function() {
         var isDisplayingImage = this.$pictureBox.attr("background-image") != undefined
 
         var imageUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
+        var thumbUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
         var thumbUrl = 'http://resizer.i.tv/350/232/fit/top/url/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
         var largeUrl = 'http://resizer.i.tv/800/800/crop/url/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
 
