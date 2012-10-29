@@ -3,14 +3,13 @@
   "description": "social photo sharing for members only!",
   "version": "0.0.1",
   "homepage": "http://bozar.dyndns.org",
-  "repository": "ssh://gitosis@localhost:photosite.git",
+  "repository": "git@github.com:bryceredd/Photosite.git",
   "engines": {
-    "node": "0.4.x"
+    "node": "0.8.x"
   },
   "dependencies": {
     "express": "2.3.x",
     "ejs": "x.x.x",
-    "mongodb": "x.x.x",
     "dependable": "~0.2.3",
     "async": "~0.1.22",
     "request": "~2.11.4",
