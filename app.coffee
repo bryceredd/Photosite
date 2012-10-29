@@ -1,8 +1,7 @@
 express = require 'express'
 ejs = require 'ejs'
-cluster = require 'cluster'
 config = require './config'
-connect = require 'connect'
+#connect = require 'connect'
 path = require 'path'
 
 exports.createServer = ->
@@ -30,7 +29,7 @@ exports.createServer = ->
 
         app.configure ->
             app.use express.static(__dirname + '/public')
-            app.use connect.compress()
+            #app.use connect.compress()
             app.set 'views', (__dirname + '/views')
             app.set 'view engine', 'ejs'
 
