@@ -1,5 +1,4 @@
+.DS_Store
 *.swp
-public/1200x900
-public/350x232
-public/resized
+public/resized/*
 node_modules
