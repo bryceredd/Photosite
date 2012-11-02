@@ -32,7 +32,6 @@ module.exports = (PHOTO_PATH) ->
 
 
     readAlbum = (album, cb) ->
-
         titlePattern = /[a-z\s]+$/gi
         titleRes = (titlePattern.exec album)
         return cb null, null if not titleRes?.length > 0
@@ -76,8 +75,8 @@ module.exports = (PHOTO_PATH) ->
         return date
 
     return {
-        getAlbum,
-        getAlbums,
+        getAlbum
+        getAlbums
         getPhoto
     }
 

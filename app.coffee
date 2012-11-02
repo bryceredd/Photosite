@@ -1,12 +1,11 @@
 express = require 'express'
 ejs = require 'ejs'
 config = require './config'
-#connect = require 'connect'
 path = require 'path'
 
 exports.createServer = ->
 
-    config.resolve (albums) ->
+    config.resolve (albums, thumbnail) ->
 
         app = express.createServer()
 
@@ -16,6 +15,9 @@ exports.createServer = ->
         app.get '/albums', albums.getAlbums
         app.get '/albums/:albumid', albums.getAlbum 
         app.get '/photo/:album/:photo', albums.getPhoto
+
+        app.get '/resize/:width/:height/:url', thumbnail.resize
+        app.get '/fit/:width/:height/:url', thumbnail.fit
 
 
         ###app.get(/\/colors\/(.+)/, function(req, res) {
@@ -41,6 +43,8 @@ exports.createServer = ->
 
 console.log """
 LISTENING ON PORT #{config.get 'PHOTOSITE_PORT'}
+PHOTO_PATH #{config.get 'PHOTO_PATH'}
+RESIZED_PHOTO_PATH #{config.get 'RESIZED_PHOTO_PATH'}
 """
 
 exports.createServer().listen config.get 'PHOTOSITE_PORT'

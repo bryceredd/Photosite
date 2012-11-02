@@ -56,8 +56,8 @@ var AlbumTile = (function() {
 
         var imageUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
         var thumbUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
-        var thumbUrl = 'http://resizer.i.tv/350/232/fit/top/url/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
-        var largeUrl = 'http://resizer.i.tv/800/800/crop/url/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
+        var thumbUrl = '/resize/350/232/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
+        var largeUrl = '/resize/800/800//'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
 
         if(isDisplayingImage) {
             this.$pictureBox.fadeOut(1000, function() {
