@@ -16,7 +16,7 @@ exports.createServer = ->
         app.get '/albums/:albumid', albums.getAlbum 
         app.get '/photo/:album/:photo', albums.getPhoto
 
-        app.get '/resize/:width/:height/:url', thumbnail.resize
+        app.get '/crop/:width/:height/:url', thumbnail.crop
         app.get '/fit/:width/:height/:url', thumbnail.fit
 
 

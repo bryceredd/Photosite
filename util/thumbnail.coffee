@@ -1,54 +1,48 @@
 fs = require 'fs'
 path = require 'path'
+request = require 'request'
 imagemagick = require "imagemagick"
 
 module.exports = (RESIZED_PHOTO_PATH) ->
 
-  resize = (req, res) ->
+  fit = (req, res) ->
+    resize fitImage, req, res
+
+  crop = (req, res) ->
+    resize cropImage, req, res
+
+  resize = (func, req, res) ->
     url = req.params.url
     size = "#{req.params.width}x#{req.params.height}"
-    cropImage url, size, (err, dest) ->
+    func url, size, (err, file) ->
       return res.send err, 500 if err?
+      console.log "output file: ", file
       res.contentType file
       res.sendfile file
 
-  fit = (req, res) ->
-    url = req.params.url
-    size = "#{req.params.width}x#{req.params.height}"
+  fitImage = (url, size, cb) ->
+    dest = pathForImage url, size, "fit"
+    ensureDoesntExist dest, cb, ->
+      imagemagick.convert [url, "-resize", size, dest], (err, metadata) ->
+        cb err, dest
 
-  cropImage = (sourceUrl, size, cb) ->
-    console.log "shrinking ", sourceUrl
-    destPath = pathForImage sourceUrl, size
+  cropImage = (url, size, cb) ->
+    [width, height] = size.split "x"
+    dest = pathForImage url, size, "crop"
+    ensureDoesntExist dest, cb, ->
 
-    ensureDoesntExist destPath, cb, ->
+      imagemagick.convert [url, "-resize", size+"^", "-gravity", "center",  "-extent", size, dest], (err, metadata) ->
+        cb err, dest
 
-      imagemagick.convert [sourceUrl, "-resize", size, destPath], (err, metadata) ->
-        console.log "shrunk to ", destPath
-        cb err, destPath
-
-  ###fitImage = (sourceUrl, destPath, size, cb) ->
-    imgData = fs.readFileSync(srcUrl, "binary")
-    console.log "shrinking ", srcUrl
-    imagemagick.resize
-      srcData: imgData
-      strip: false
-      width: config.thumbWidth
-      height: "^" + config.thumbHeight
-      customArgs: ["-gravity", "north", "-extent", config.thumbSize]
-    , (err, stdout, stderr) ->
-      console.log "shrunk to ", destPath
-      fs.writeFileSync destPath, stdout, "binary"
-      cb err, destPath###
-
-  ensureDoesntExist = (destPath, exists, doesntExist) ->
-    fs.stat destPath, (err, stats) ->
+  ensureDoesntExist = (dest, exists, doesntExist) ->
+    fs.stat dest, (err, stats) ->
       if not err and stats.isFile()
-        exists()
+        exists err, dest
       else
         doesntExist()
 
-  pathForImage = (sourceUrl, size) ->
-    path.join RESIZED_PHOTO_PATH, ("#{encodeURIComponent(sourceUrl)}#{size}".replace /[^a-zA-Z0-9]/, "")+".jpg"
+  pathForImage = (sourceUrl, size, type) ->
+    path.join RESIZED_PHOTO_PATH, ("#{type}#{encodeURIComponent(sourceUrl)}#{size}".replace /[^a-zA-Z0-9]/, "")+".jpg"
 
   colorSchemeForImage = (path, cb) ->
     imagemagick.convert [path, "-colors", 4, "-format", "%c", "-depth", 8, "histogram:info:-"], (err, output) ->
@@ -76,7 +70,7 @@ module.exports = (RESIZED_PHOTO_PATH) ->
       cb null, colors
 
   return {
-    resize
     fit 
+    crop
   }
 

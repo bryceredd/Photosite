@@ -44,6 +44,8 @@ module.exports = (PHOTO_PATH) ->
             return cb null if err?.errno is 27
             return cb err if err
 
+            files = files.filter (file) -> file isnt ".DS_Store"
+
             obj = {
                 albumId: album
                 subtitle: albumTitle.trim()
