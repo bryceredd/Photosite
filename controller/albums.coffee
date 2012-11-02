@@ -68,7 +68,7 @@ module.exports = (PHOTO_PATH) ->
         return "" if not month?.length > 0
 
         year = year[1]
-        month = month[1]
+        month = +month[1] - 1
 
         date = new Date()
         date.setFullYear year
