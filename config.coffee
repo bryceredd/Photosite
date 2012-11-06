@@ -9,7 +9,8 @@ mongoHQpassword = 'mongo_pass_6338'
 mongoHQdbname = 'photobase'
 
 # CONFIG / VARIABLES
-deps.register "PHOTO_DB", process.env.PHOTO_DB || "mongodb://#{mongoHQusername}:#{mongoHQpassword}@staff.mongohq.com:10081/#{mongoHQdbname}"
+PHOTO_DB = process.env.PHOTO_DB || "mongodb://#{mongoHQusername}:#{mongoHQpassword}@staff.mongohq.com:10081/#{mongoHQdbname}"
+deps.register "PHOTO_DB", PHOTO_DB
 deps.register "PHOTOSITE_PORT", process.env.PHOTOSITE_PORT || 8081
 deps.register "IMAGE_RESIZER", process.env.IMAGE_RESIZER || 'resizer.i.tv'
 deps.register "PHOTO_PATH", process.env.PHOTO_PATH || 'organized'
