@@ -3,6 +3,7 @@ var RANDOM_DELAY_MAX = 70 // in seconds
 
 var AlbumTile = (function() {
     var $template = $(".template.pictureItem").removeClass("template").remove()
+    var randomColor = "hsl("+Math.round(Math.random()*360)+", 90%, 70%)"
 
     function AlbumTile() {
         this.$tile = $template.clone()
@@ -80,7 +81,7 @@ var AlbumTile = (function() {
             this.$pictureCaption.hide()
         }
 
-        this.$pictureTitle.css({"color": "hsl("+Math.round(Math.random()*360)+", 90%, 70%)"})
+        this.$pictureTitle.css({"color":randomColor})
 
     }
 
