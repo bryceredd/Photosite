@@ -1,5 +1,5 @@
 body {
-    background:black; 
+    background: black; 
     font-family: 'Lato', sans-serif;
 }
 
@@ -8,19 +8,19 @@ a {
 }
 
 .pictureItem {
-    float:left; 
-    height:232px; 
-    margin:2px;
-    width:350px; 
+    float: left; 
+    height: 232px; 
+    margin: 2px;
+    width: 350px; 
 }
 
 .download {
     background: rgba(0, 0, 0, .4);
     color: white;
-    margin-top:5px;
-    margin-left:5px;
-    padding:5px;
-    position:absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    position: absolute;
 
     opacity: 0;
     -webkit-transition: opacity .25s ease-in-out;
@@ -30,30 +30,30 @@ a {
     background: #121212;
     background-position: center center; 
     background-repeat: no-repeat;
-    height:232px; 
-    width:350px; 
+    height: 232px; 
+    width: 350px; 
 
     -webkit-transition: background-image .25s ease-in-out;
 }
 
 .titleBox {
     background: #121212;
-    float:left; 
-    height:232px; 
-    margin:2px;
-    width:700px; 
+    float: left; 
+    height: 232px; 
+    margin: 2px;
+    width: 700px; 
 }
 
 .titleBox .title {
-    color:#facc2e;
+    color: #facc2e;
     font-size: 36pt;
-    padding-left:20px;
+    padding-left: 20px;
 }
 
 .titleBox .subtitle {
     color: #ababab;
-    font-size:22pt;
-    padding-left:20px;
+    font-size: 22pt;
+    padding-left: 20px;
 }
 
 .pictureItem:hover .download {
@@ -62,18 +62,18 @@ a {
 
 .pictureCaption {
     background: rgba(0, 0, 0, .4);
-    position:relative;
-    top:-80px;
-    height:80px;
-    padding-left:10px;
+    position: relative;
+    top: -80px;
+    height: 80px;
+    padding-left: 10px;
 }
 
 .pictureCaption .title {
-    color:#facc2e;
+    color: #facc2e;
     font-size: 20pt;
 }
 
 .pictureCaption .subtitle {
     color: #ababab;
-    font-size:12pt;
+    font-size: 12pt;
 }

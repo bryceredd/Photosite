@@ -80,6 +80,8 @@ var AlbumTile = (function() {
             this.$pictureCaption.hide()
         }
 
+        this.$pictureTitle.css({"color": "hsl("+Math.round(Math.random()*360)+", 90%, 70%)"})
+
     }
 
     AlbumTile.prototype.element = function() {

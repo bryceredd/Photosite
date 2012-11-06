@@ -4,6 +4,8 @@ var AlbumPage = (function() {
 
     function AlbumPage() {
         var self = this
+
+
         this.isAlbum = document.location.pathname != "/"
 
         this.$titleBox = $titleBoxTemplate.clone()
