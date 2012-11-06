@@ -1,4 +1,5 @@
 path = require 'path'
+mongoose = require 'mongoose'
 {container} = require 'dependable'
 
 deps = container()
@@ -14,7 +15,7 @@ deps.register "IMAGE_RESIZER", process.env.IMAGE_RESIZER || 'resizer.i.tv'
 deps.register "PHOTO_PATH", process.env.PHOTO_PATH || 'organized'
 deps.register "RESIZED_PHOTO_PATH", process.env.RESIZED_PHOTO_PATH || 'resized'
 
-db = Mongoose.createConnection PHOTO_DB
+db = mongoose.createConnection PHOTO_DB
 
 # APPLICATION CODE
 deps.load path.join __dirname, 'controller'
