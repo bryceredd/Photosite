@@ -31,7 +31,7 @@ module.exports = (RESIZED_PHOTO_PATH) ->
     dest = pathForImage url, size, "crop"
     ensureDoesntExist dest, cb, ->
 
-      imagemagick.convert [url, "-resize", size+"^", "-gravity", "center",  "-extent", size, dest], (err, metadata) ->
+      imagemagick.convert [url, "-resize", size+"^", "-gravity", "north",  "-extent", size, dest], (err, metadata) ->
         cb err, dest
 
   ensureDoesntExist = (dest, exists, doesntExist) ->
