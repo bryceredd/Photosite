@@ -3,7 +3,7 @@ path = require 'path'
 moment = require 'moment'
 async = require 'async'
 
-module.exports = (PHOTO_PATH) ->
+module.exports = (PHOTO_PATH, Photo) ->
 
     getPhoto = (req, res) ->
         album = req.params.album
@@ -54,8 +54,7 @@ module.exports = (PHOTO_PATH) ->
                 pictures: files
             }
 
-            return cb null, obj
-
+            Photo.hydrate obj, cb
 
     dateForAlbum = (name) ->
         yearPattern = /([0-9]+)/gi
