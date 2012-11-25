@@ -5,7 +5,7 @@ path = require 'path'
 
 exports.createServer = ->
 
-    config.resolve (albums, thumbnail) ->
+    config.resolve (albums, movies, thumbnail) ->
 
         app = express.createServer()
 
@@ -19,7 +19,6 @@ exports.createServer = ->
         app.get '/crop/:width/:height/:url', thumbnail.crop
         app.get '/fit/:width/:height/:url', thumbnail.fit
 
-
         ###app.get(/\/colors\/(.+)/, function(req, res) {
             var url = req.url.replace("/colors/", "")
 
@@ -29,6 +28,9 @@ exports.createServer = ->
             })
         })###
 
+        app.get '/movies', movies.getMovies
+        app.get '/movies/:movieId', movies.getMovie
+        
         app.configure ->
             app.use express.static(__dirname + '/public')
             #app.use connect.compress()

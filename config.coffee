@@ -16,6 +16,7 @@ deps.register "PHOTOSITE_PORT", process.env.PHOTOSITE_PORT || 8081
 deps.register "IMAGE_RESIZER", process.env.IMAGE_RESIZER || 'resizer.i.tv'
 deps.register "PHOTO_PATH", process.env.PHOTO_PATH || 'organized'
 deps.register "RESIZED_PHOTO_PATH", process.env.RESIZED_PHOTO_PATH || 'resized'
+deps.register "MOVIE_PATH", process.env.MOVIE_PATH || 'movies'
 
 db = mongoose.createConnection PHOTO_DB
 

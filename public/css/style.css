@@ -77,3 +77,32 @@ a {
     color: #ababab;
     font-size: 12pt;
 }
+
+.player {
+    clear: both;
+}
+
+.moviemenu {
+
+}
+
+.moviemenu li {
+    border: dotted 1px white;
+    color: white;
+    float: left;
+    list-style-type: none;
+    margin: 5px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.showmenu {
+    border: dotted 1px white;
+    clear: boh;
+    color: white;
+    float: left;
+    list-style-type: none;
+    margin: 5px;
+    padding: 10px;
+    text-decoration: none;
+}

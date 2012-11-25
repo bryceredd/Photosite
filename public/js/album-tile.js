@@ -30,13 +30,40 @@ var AlbumTile = (function() {
         this.album = album
 
         this.picture = this.randomData()
-        this.randomChange()
+        //this.randomChange()
+        this.colorChange(0, 255, 0)
 
         this.write()
     }
 
     AlbumTile.prototype.randomData = function() {
         return this.album.pictures[Math.floor(Math.random()*this.album.pictures.length)]
+    }
+
+    AlbumTile.prototype.colorChange = function(r, g, b) {
+        this.album.pictures = this.album.pictures.sort(function(i, j) {
+            i = i.colors? i.colors[0] : null
+            j = j.colors? j.colors[0] : null
+
+            if(!i && !j) return 0
+            if(!i) return -1
+            if(!j) return 1
+
+            iScore = Math.abs(i.r - r) + Math.abs(i.g - g) + Math.abs(i.b - b)
+            jScore = Math.abs(j.r - r) + Math.abs(j.g - g) + Math.abs(j.b - b)
+
+            console.log("iscore", iScore, jScore)
+
+            return (iScore > jScore ? 1 : -1)
+        })
+        
+        console.log(this.album.pictures)
+
+        if(this.album.pictures[0].colors)
+            console.log("this picture is ", this.album.pictures[0].colors[0].r, this.album.pictures[0].colors[0].g, this.album.pictures[0].colors[0 ].b)
+
+        this.picture = this.album.pictures[0]
+        this.write()
     }
 
     AlbumTile.prototype.randomChange = function() {
@@ -55,10 +82,10 @@ var AlbumTile = (function() {
         var self = this
         var isDisplayingImage = this.$pictureBox.attr("background-image") != undefined
 
-        var imageUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
-        var thumbUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture)
-        var thumbUrl = '/crop/350/232/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
-        var largeUrl = '/fit/800/800/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture))
+        var imageUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file)
+        var thumbUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file)
+        var thumbUrl = '/crop/350/232/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file))
+        var largeUrl = '/fit/800/800/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file))
 
         if(isDisplayingImage) {
             this.$pictureBox.fadeOut(1000, function() {

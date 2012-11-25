@@ -21,6 +21,12 @@ module.exports = ->
           loc = path.join PHOTO_PATH, dir, file
           not pics[loc]?
 
+        if files.length > 0
+          console.log "**************"
+          console.log "* "+key for key, val of pics
+          console.log "**************"
+          (console.log path.join PHOTO_PATH, dir, file) for file in files
+
         photos = files.map (file) -> 
           new Photo 
             photoId: file

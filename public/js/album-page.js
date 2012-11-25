@@ -5,7 +5,6 @@ var AlbumPage = (function() {
     function AlbumPage() {
         var self = this
 
-
         this.isAlbum = document.location.pathname != "/"
 
         this.$titleBox = $titleBoxTemplate.clone()
@@ -14,7 +13,6 @@ var AlbumPage = (function() {
 
         this.$page = $template
         this.tiles = []
-
 
         if(this.isAlbum) {
             var album = document.location.pathname.split("/")[2]
@@ -28,7 +26,7 @@ var AlbumPage = (function() {
         var self = this
 
         $.get("/albums", function(response) {
-            self.albumdata = response;
+            self.albumdata = response
             self.write()
         })
     }

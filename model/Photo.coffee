@@ -33,8 +33,9 @@ module.exports = (db, PHOTO_PATH) ->
       cb err, album
 
   PhotoSchema.statics.upsert = (photo, cb) ->
-    console.log "upserting", photo.photoId
-    @findOneAndUpdate photoId: photo.photoId, photo, upsert: true, cb
+    console.log "upserting", photo.albumId, photo.photoId
+
+    @findOneAndUpdate photoId: photo.photoId, albumId: photo.albumId, photo, upsert: true, cb
 
   PhotoSchema.methods.path = ->
     path.join PHOTO_PATH, path.join @albumId, @photoId
@@ -57,8 +58,12 @@ module.exports = (db, PHOTO_PATH) ->
 
       photo = @toJSON()
       delete photo._id
-      photo.colors = colors.sort (a, b) -> b.amount - a.amount
-      Photo.upsert photo, cb
+
+      photo.colors = colors.sort((a, b) -> b.amount - a.amount).map((v) -> v.colors)[0..1]
+
+      Photo.upsert photo, (err, thing) ->
+        console.log "ERROR:!! ", err if err?
+        cb null, thing
 
 
   Photo = db.model 'Photo', PhotoSchema
