@@ -98,7 +98,18 @@ a {
 
 .showmenu {
     border: dotted 1px white;
-    clear: boh;
+    clear: both;
+    color: white;
+    float: left;
+    list-style-type: none;
+    margin: 5px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.downloadmovie {
+    border: dotted 1px white;
+    clear: both;
     color: white;
     float: left;
     list-style-type: none;

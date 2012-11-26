@@ -2,6 +2,7 @@ var MoviePage = (function() {
   var $menu = $(".moviemenu")
   var $player = $(".player")
   var $showmenu = $(".showmenu")
+  var $download = $(".downloadmovie")
 
   function MoviePage() {
     self = this
@@ -11,6 +12,10 @@ var MoviePage = (function() {
     $showmenu.bind("click", function() {
       self.movie = null
       self.write()
+    })
+
+    $download.bind("click", function() {
+      window.location = "/movies/"+self.movie
     })
   }
 
@@ -44,6 +49,7 @@ var MoviePage = (function() {
       $player.hide()
       $menu.show()
       $showmenu.hide()
+      $download.hide()
 
     } else {
 
@@ -52,6 +58,7 @@ var MoviePage = (function() {
       $player.show()
       $menu.hide()
       $showmenu.show()
+      $download.show()
     }
   }
 
