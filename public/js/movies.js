@@ -38,9 +38,9 @@ var MoviePage = (function() {
 
         var element = $("<li></li>")
         element.append(movie.replace(/\..*$/, ""))
-        element.bind("click", movie, function(e) {
-          self.movie = e.data
-          self.write()
+        
+        element.bind("click", movie, function(e) {  
+          window.location = "/movies/"+e.data
         })
 
         $menu.append(element)
