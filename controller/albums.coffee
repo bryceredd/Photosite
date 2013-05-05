@@ -10,7 +10,7 @@ module.exports = (PHOTO_PATH, Photo) ->
         photo = req.params.photo
         file = path.join PHOTO_PATH, path.join album, photo
 
-        return res.send null, 404 unless fs.existsSync file
+        return res.send 404 unless fs.existsSync file
 
         res.contentType file
         res.sendfile file
