@@ -2,3 +2,5 @@
 *.swp
 public/resized/*
 node_modules
+resized/*
+
