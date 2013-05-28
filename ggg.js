@@ -10,5 +10,6 @@ module.exports = {
   // servers to deploy to
   servers: {
     bozar: "root@bozar.dyndns.org",
+    bozar_local: "192.168.1.3"
   }
 }

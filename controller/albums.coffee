@@ -8,7 +8,8 @@ module.exports = (PHOTO_PATH, Photo) ->
     getPhoto = (req, res) ->
         album = req.params.album
         photo = req.params.photo
-        file = path.join PHOTO_PATH, path.join album, photo
+        half = path.join album, photo
+        file = path.join PHOTO_PATH, half
 
         return res.send 404 unless fs.existsSync file
 

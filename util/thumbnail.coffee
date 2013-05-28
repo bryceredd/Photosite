@@ -2,6 +2,7 @@ fs = require 'fs'
 path = require 'path'
 request = require 'request'
 imagemagick = require "imagemagick"
+md5 = require 'MD5'
 
 module.exports = (RESIZED_PHOTO_PATH) ->
 
@@ -42,7 +43,7 @@ module.exports = (RESIZED_PHOTO_PATH) ->
         doesntExist()
 
   pathForImage = (sourceUrl, size, type) ->
-    path.join RESIZED_PHOTO_PATH, ("#{type}#{encodeURIComponent(sourceUrl)}#{size}".replace /[^a-zA-Z0-9]/, "")+".jpg"
+    path.join RESIZED_PHOTO_PATH, md5("#{type}#{encodeURIComponent(sourceUrl)}#{size}")+".jpg"
 
   return {
     fit 

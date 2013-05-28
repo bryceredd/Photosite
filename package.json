@@ -8,7 +8,6 @@
     "node": "0.8.x"
   },
   "dependencies": {
-    "express": "2.3.x",
     "ejs": "x.x.x",
     "dependable": "~0.2.3",
     "async": "~0.1.22",
@@ -19,6 +18,8 @@
     "fjs": "~0.5.0",
     "imagemagick": "~0.1.3",
     "gm": "~1.5.1",
-    "mongoose": "~3.3.1"
+    "mongoose": "~3.3.1",
+    "express": "~3.2.5",
+    "MD5": "~1.0.3"
   }
 }
