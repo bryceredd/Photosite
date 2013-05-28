@@ -80,11 +80,14 @@ var AlbumTile = (function() {
 
     AlbumTile.prototype.write = function() {
         var self = this
+        var retina = window.devicePixelRatio > 1
+        var width = retina? 700 : 350
+        var height = retina ? 464 : 232
         var isDisplayingImage = this.$pictureBox.attr("background-image") != undefined
 
         var imageUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file)
         var thumbUrl = "/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file)
-        var thumbUrl = '/crop/350/232/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file))
+        var thumbUrl = '/crop/'+width+'/'+height+'/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file))
         var largeUrl = '/fit/800/800/'+encodeURIComponent(window.location.origin+"/photo/"+encodeURIComponent(this.album.albumId)+'/'+encodeURIComponent(this.picture.file))
 
         if(isDisplayingImage) {

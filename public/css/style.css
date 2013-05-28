@@ -36,6 +36,16 @@ a {
     -webkit-transition: background-image .25s ease-in-out;
 }
 
+@media only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min-device-pixel-ratio: 2) {
+    .pictureBox {
+        -webkit-background-size:350px 232px;
+    }
+}
+
+
 .titleBox {
     background: #121212;
     float: left; 
