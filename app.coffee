@@ -7,7 +7,7 @@ exports.createServer = ->
 
     config.resolve (albums, movies, thumbnail) ->
 
-        app = express.createServer()
+        app = express()
 
         app.get '/', (req, res) -> res.render "layout"
         app.get '/album/:albumid', (req, res) -> res.render "layout"
